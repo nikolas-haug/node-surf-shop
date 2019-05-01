@@ -1,39 +1,29 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router({ matchParams: true });
 
-/* GET reviews index /reviews */
+/* GET reviews index /posts/:id/reviews */
 router.get('/', (req, res, next) => {
-    res.send('INDEX /reviews');
+    res.send('INDEX /posts/:id/reviews');
 });
 
-/* GET reviews new /reviews/new */
-router.get('/new', (req, res, next) => {
-    res.send('NEW /reviews/new');
+/* POST reviews create /posts/:id/reviews */
+router.post('/', (req, res, next) => {
+    res.send('CREATE /posts/:id/reviews');
 });
 
-/* POST reviews create /reviews */
-router.review('/', (req, res, next) => {
-    res.send('CREATE /reviews');
+/* GET reviews edit /posts/:id/reviews/:jreview_id/edit */
+router.get('/:review_id/edit', (req, res, next) => {
+    res.send('EDIT /posts/:id/reviews/:review_id/edit');
 });
 
-/* GET reviews show /reviews/:id */
-router.get('/:id', (req, res, next) => {
-    res.send('SHOW /reviews/:id');
+/* PUT reviews update /posts/:id/reviews/:review_id */
+router.put('/:review_id', (req, res, next) => {
+    res.send('UPDATE /posts/:id/reviews/:review_id');
 });
 
-/* GET reviews edit /reviews/:id/edit */
-router.get('/:id/edit', (req, res, next) => {
-    res.send('EDIT /reviews/:id/edit');
-});
-
-/* PUT reviews update /reviews/:id */
-router.put('/:id', (req, res, next) => {
-    res.send('UPDATE /reviews/:id');
-});
-
-/* DELETE reviews destroy /reviews/:id */
-router.delete('/:id', (req, res, next) => {
-    res.send('DELETE /reviews/:id');
+/* DELETE reviews destroy /posts/:id/reviews/:review_id */
+router.delete('/:review_id', (req, res, next) => {
+    res.send('DELETE /posts/:id/reviews/:review_id');
 });
 
 module.exports = router;
