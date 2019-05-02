@@ -9,8 +9,8 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 
 // require routes
-const indexRouter   = require('./routes/index');
-const postsRouter   = require('./routes/posts');
+const indexRouter = require('./routes/index');
+const postsRouter = require('./routes/posts');
 const reviewsRouter = require('./routes/reviews');
 
 const app = express();
@@ -42,8 +42,10 @@ app.use(session({
   saveUninitialized: true
 }));
 
-passport.use(User.createStrategy());
+app.use(passport.initialize());
+app.use(passport.session());
 
+passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -53,12 +55,12 @@ app.use('/posts', postsRouter);
 app.use('/posts/:id/reviews', reviewsRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
