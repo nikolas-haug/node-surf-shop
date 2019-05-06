@@ -18,6 +18,7 @@ const app = express();
 
 // connect to the database
 mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false);
 mongoose.connect('mongodb://localhost:27017/surf-shop', { useNewUrlParser: true });
 
 const db = mongoose.connection;
@@ -32,7 +33,7 @@ app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
