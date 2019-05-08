@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const createError = require('http-errors');
 const express = require('express');
+const engine = require('ejs-mate');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -21,13 +22,16 @@ const app = express();
 // connect to the database
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
-mongoose.connect('mongodb://localhost:27017/surf-shop-mapbox', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/surf-shop', { useNewUrlParser: true });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   console.log('we\'re connected!');
 });
+
+// use ejs-locals for all ejs templates:
+app.engine('ejs', engine);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -53,6 +57,12 @@ app.use(passport.session());
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+// set title middleware
+app.use(function(req, res, next) {
+  res.locals.title = 'Surf Shop';
+  next();
+});
 
 // Mount routes
 app.use('/', indexRouter);
