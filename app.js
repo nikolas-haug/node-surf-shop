@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('locus');
 
 const createError = require('http-errors');
 const express = require('express');
@@ -60,6 +61,12 @@ passport.deserializeUser(User.deserializeUser());
 
 // set local variables middleware
 app.use(function(req, res, next) {
+  // set up a logged in user for dev purposes
+  req.user = {
+    '_id' : '5cd45ea7e68393f9d2da35e1',
+    'username' : 'niko'
+  }
+  res.locals.currentUser = req.user;
   // set default page title
   res.locals.title = 'Surf Shop';
   // set success flash message
