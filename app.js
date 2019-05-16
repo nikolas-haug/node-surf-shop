@@ -1,5 +1,4 @@
 require('dotenv').config();
-require('locus');
 
 const createError = require('http-errors');
 const express = require('express');
@@ -12,6 +11,8 @@ const User = require('./models/user');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
+// const seedPosts = require('./seeds');
+// seedPosts();
 
 // require routes
 const indexRouter = require('./routes/index');
@@ -37,6 +38,8 @@ app.engine('ejs', engine);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+// set public assets directory
+app.use(express.static('public'));
 
 app.use(logger('dev'));
 app.use(express.json());
