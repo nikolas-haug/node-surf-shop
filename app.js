@@ -68,8 +68,12 @@ app.use(function(req, res, next) {
   res.locals.title = 'Surf Shop';
   // set up a logged in user for dev purposes
   req.user = {
-    '_id' : '5cd45ea7e68393f9d2da35e1',
-    'username' : 'niko'
+    // '_id' : '5cd45ea7e68393f9d2da35e1',
+    // 'username' : 'niko'
+    '_id' : '5cd48737bc32ff578bcc29cc',
+    'username' : 'franny'
+    // '_id' : '5cdedaf1d442879c55a12b74',
+    // 'username' : 'apple'
   }
   res.locals.currentUser = req.user;
   // set success flash message
