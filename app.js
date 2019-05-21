@@ -24,8 +24,8 @@ const app = express();
 // connect to the database
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
-mongoose.connect('mongodb://localhost:27017/surf-shop-2', { 
-  useNewUrlParser: true ,
+mongoose.connect('mongodb://localhost:27017/surf-shop-2', {
+  useNewUrlParser: true,
   useCreateIndex: true
 });
 
@@ -71,21 +71,21 @@ app.use(function (req, res, next) {
   res.locals.title = 'Surf Shop';
   // set up a logged in user for dev purposes
   // req.user = {
-    // "_id" : "5ce4376ee7603839058a04d2",
-    // "username" : "niko",
-    // "_id" : "5ce4378ce7603839058a04d4",
-    // "username" : "franny",
-    // "_id" : "5ce43799e7603839058a04d5",
-    // "username" : "apple"
+  // "_id" : "5ce4376ee7603839058a04d2",
+  // "username" : "niko",
+  // "_id" : "5ce4378ce7603839058a04d4",
+  // "username" : "franny",
+  // "_id" : "5ce43799e7603839058a04d5",
+  // "username" : "apple"
 
-      // '_id' : '5cd45ea7e68393f9d2da35e1',
-      // 'username' : 'niko'
-      // '_id' : '5cd48737bc32ff578bcc29cc',
-      // 'username' : 'franny'
-      // '_id' : '5cdedaf1d442879c55a12b74',
-      // 'username' : 'apple'
-      // }
-      res.locals.currentUser = req.user;
+  // '_id' : '5cd45ea7e68393f9d2da35e1',
+  // 'username' : 'niko'
+  // '_id' : '5cd48737bc32ff578bcc29cc',
+  // 'username' : 'franny'
+  // '_id' : '5cdedaf1d442879c55a12b74',
+  // 'username' : 'apple'
+  // }
+  res.locals.currentUser = req.user;
   // set success flash message
   res.locals.success = req.session.success || '';
   delete req.session.success;
