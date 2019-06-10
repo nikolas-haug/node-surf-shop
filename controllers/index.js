@@ -21,15 +21,15 @@ module.exports = {
     async postRegister(req, res, next) {
         try {
             const user = await User.register(new User(req.body), req.body.password);
-            req.login(user, function(err) {
-                if(err) return next(err);
+            req.login(user, function (err) {
+                if (err) return next(err);
                 req.session.success = `Welcome to Surf Shop, ${user.username}!`;
                 res.redirect('/');
             });
-        } catch(err) {
+        } catch (err) {
             const { username, email } = req.body;
             let error = err.message;
-            if(error.includes('duplicate') && error.includes('index: email_1 dup key')) {
+            if (error.includes('duplicate') && error.includes('index: email_1 dup key')) {
                 error = 'A user with the given email is already registered';
             }
             res.render('register', { title: 'Register', username, email, error });
@@ -39,23 +39,25 @@ module.exports = {
 
     // GET /login
     getLogin(req, res, next) {
-        if(req.isAuthenticated()) return res.redirect('/');
-        if(req.query.returnTo) req.session.redirectTo = req.headers.referer;
+        if (req.isAuthenticated()) return res.redirect('/');
+        if (req.query.returnTo) req.session.redirectTo = req.headers.referer;
         res.render('login', { title: 'Login' });
     },
 
     // POST /login
     async postLogin(req, res, next) {
-       const { username, password } = req.body;
-       const { user, error } = await User.authenticate()(username, password);
-       if(!user && erorr) return next(error);
-       req.login(user, function(err) {
-            if(err) return next(err);
+        const { username, password } = req.body;
+        const { user, error } = await User.authenticate()(username, password);
+        if (!user && error) {
+            return next(error);
+        }
+        req.login(user, function(err) {
+            if (err) return next(err);
             req.session.success = `Welcome back, ${username}!`;
             const redirectUrl = req.session.redirectTo || '/';
             delete req.session.redirectTo;
             res.redirect(redirectUrl);
-       });
+        });
     },
 
     // GET /logout
@@ -73,11 +75,11 @@ module.exports = {
     // UPDATE Profile
     async updateProfile(req, res, next) {
         const { email,
-                username
+            username
         } = req.body;
         const { user } = res.locals;
-        if(username) user.username = username;
-        if(email) user.email = email;
+        if (username) user.username = username;
+        if (email) user.email = email;
         await user.save();
         const login = util.promisify(req.login.bind(req));
         await login(user);
