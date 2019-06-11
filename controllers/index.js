@@ -74,7 +74,8 @@ module.exports = {
 
     // UPDATE Profile
     async updateProfile(req, res, next) {
-        const { email,
+        const { 
+            email,
             username
         } = req.body;
         const { user } = res.locals;
